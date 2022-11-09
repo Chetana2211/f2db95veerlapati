@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+
+  - let icecreams=results
+
+  div(class= "container-fluid")
+    div(class = "row")
+      each icecream,index in icecreams
+        div(class= "col-sm-2",  onclick=`buy(${index})`) Icecream Type: #{icecream.icecream_type}
+        div(class= "col-sm-2",  onclick=`buy(${index})`) Icecream Size: #{icecream.size}
+        div(class= "col-sm-2",  onclick=`buy(${index})`) Icecream Cost: #{icecream.cost}
+
+  script.
+    function buy(itemNum){
+      alert(`The purchased item is ${itemNum+1}`)
+    }
