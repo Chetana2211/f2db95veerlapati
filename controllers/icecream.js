@@ -1,14 +1,32 @@
 var icecreams = require('../models/icecream'); 
  
 // List of all icecreams
-exports.costume_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: icecreams list'); 
-}; 
- 
+exports.icecream_list = async function (req, res) {
+    try {
+        theicecreams = await icecreams.find();
+        res.send(theicecreams);
+    }
+    catch (err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
+};
 // for a specific icecream. 
 exports.icecream_detail = function(req, res) { 
     res.send('NOT IMPLEMENTED: icecream detail: ' + req.params.id); 
 }; 
+
+// for a specific icecream. 
+exports.icecream_detail = async function (req, res) {
+    console.log("detail" + req.params.id)
+    try {
+        result = await icecreams.findById(req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+};
  
 // Handle icecream create on POST. 
 exports.icecream_create_post = async function(req, res) { 
@@ -17,7 +35,7 @@ exports.icecream_create_post = async function(req, res) {
     // We are looking for a body, since POST does not have query parameters. 
     // Even though bodies can be in many different formats, we will be picky 
     // and require that it be a json object 
-    // {"icecream_type":"butterscotch", "cost":15, "size":"large"} 
+    // {"icecream_type":"nuttella", "cost":10, "size":"small"} 
     document.icecream_type = req.body.icecream_type; 
     document.cost = req.body.cost; 
     document.size = req.body.size; 
@@ -37,27 +55,31 @@ exports.icecream_delete = function(req, res) {
 }; 
  
 // Handle icecream update form on PUT. 
-exports.icecream_update_put = function(req, res) { 
-    res.send('NOT IMPLEMENTED: icecream update PUT' + req.params.id); 
-}; 
-// List of all icecream 
-exports.icecream_list = async function(req, res) { 
-    try{ 
-        theicecreams = await icecreams.find(); 
-        res.send(theicecreams); 
+exports.icecream_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await icecreams.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.icecream_type)  toUpdate.icecream_type = req.body.icecream_type; 
+        if(req.body.cost) toUpdate.cost = req.body.cost; 
+        if(req.body.size) toUpdate.size = req.body.size; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
     } 
-    catch(err){ 
-        res.status(500); 
-        res.send(`{"error": ${err}}`); 
-    }   
-};
+}; 
 
 // VIEWS 
 // Handle a show all view 
 exports.icecream_view_all_Page = async function(req, res) { 
     try{ 
         theicecreams = await icecreams.find(); 
-        res.render('icecream', { title: 'Icecream Search Results', results: theicecreams }); 
+        res.render('icecream', { title: 'icecream Search Results', results: theicecreams }); 
     } 
     catch(err){ 
         res.status(500); 
