@@ -1,0 +1,34 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  form(id='icecreamForm', action="/resource/icecream", method="POST") 
+    div.form-group 
+        label.icecreamAttr(for='icecream_type') icecream type 
+        input#icecream_type(type='text', name='icecream_type') 
+    div.form-group 
+        label.icecreamAttr(for='size') icecream size 
+        input#size(type='text', name='size') 
+    div.form-group 
+        label.icecreamAttr(for='cost') icecream cost 
+        input#cost(type='number', name='cost') 
+    input(type="submit") 
+ 
+  script. 
+    document.forms['icecreamForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    }); 
