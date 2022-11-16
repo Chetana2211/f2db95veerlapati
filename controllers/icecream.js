@@ -86,3 +86,30 @@ exports.icecream_view_all_Page = async function(req, res) {
         res.send(`{"error": ${err}}`); 
     }   
 }; 
+// Handle icecream delete on DELETE. 
+exports.icecream_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await icecreams.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
+}; 
+
+ 
+ // Handle a show one view with id specified by query 
+ exports.icecream_view_one_Page = async function(req, res) { 
+    console.log("single view for id "  + req.query.id) 
+    try{ 
+        result = await icecreams.findById( req.query.id) 
+        res.render('icecreamdetail',  
+{ title: 'icecream Detail', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
