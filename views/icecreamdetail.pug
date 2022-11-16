@@ -7,16 +7,20 @@ block content
   - let icecream_type = toShow.icecream_type 
   - let icecreamcost = toShow.cost 
   - let icecreamsize = toShow.size 
-  div 
+  div(class="d-grid gap-3")  
     div.row 
-      div(class='icecreamAttr mr-3') icecream ID is: 
-      div #{icecreamid} 
+      div(class='icecreamAttr mr-3 bg-light border border-dark rounded-2 shadow p-2  text-dark') icecream ID is: 
+      div(class='icecreamAttr mr-3  bg-secondary border border-dark rounded-2 shadow p-2  text-white')
+        div #{icecreamid} 
+    div.row
+      div(class='icecreamAttr mr-3 bg-light border border-dark rounded-3 shadow p-2  text-dark') icecream Type is: 
+      div(class='icecreamAttr mr-3 bg-secondary border border-dark rounded-2 shadow p-2   text-white')
+        div #{icecream_type} 
     div.row 
-      div(class='icecreamAttr mr-3') icecream Type is: 
-      div #{icecream_type} 
+      div(class='icecreamAttr mr-3 bg-light border border-dark rounded-3 shadow p-2  text-dark') icecream Size is: 
+      div(class='icecreamAttr mr-3 bg-secondary border border-dark rounded-2 shadow p-2  text-white')
+        div #{icecreamsize} 
     div.row 
-      div(class='icecreamAttr mr-3') icecream Size is: 
-      div #{icecreamsize} 
-    div.row 
-      div(class='icecreamAttr mr-3') icecream Cost is: 
-      div #{icecreamcost} 
+      div(class='icecreamAttr mr-3 bg-light border border-dark rounded-3 shadow p-2  text-dark') icecream Cost is: 
+      div(class='icecreamAttr mr-3 bg-secondary border border-dark rounded-2 shadow p-2  text-white')
+        div #{icecreamcost} 
