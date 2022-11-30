@@ -1,19 +1,12 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
-  p Hi I am  Chetana Sai Veerlapati
-    button(type="button",class="btn btn-success",onclick="doBump()") Press me
-  p 
-  div(id="bump") Bump the count
-  script. 
-    var count = 0;
-    var bump=1;
-    function doBump() {
-    count = count+bump;
-    bump++;
-    document.getElementById("bump").innerHTML = 'Bump '+ count +' times';
-    }
-
-  a(href='/Eclairs') Click here to search for Eclairs items
+extends layout 
+ 
+block content 
+  if (!user) 
+    a(href="/login") Login 
+    br 
+    a(href="/register") Register 
+  if (user) 
+    p You are currently logged in as #{user.username} 
+    a(href="/icecream") Take me to Icecream 
+    br 
+    a(href="/logout") Logout 
